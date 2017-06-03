@@ -59,7 +59,9 @@ static NSArray *RKEntityIdentificationAttributesFromUserInfoOfEntity(NSEntityDes
                     [NSException raise:NSInvalidArgumentException format:@"Invalid identifier attribute specified in user info key '%@' of entity '%@': no attribue was found with the name '%@'", RKEntityIdentificationAttributesUserInfoKey, [entity name], attributeName];
                 }
                 
-                [attributes addObject:attribute];
+                if(attribute != nil) {
+                    [attributes addObject:attribute];
+                }
             };
             return attributes;
         }
@@ -281,7 +283,9 @@ static BOOL entityIdentificationInferenceEnabled = YES;
         [NSException raise:NSInvalidArgumentException format:@"Connections can only be described using `NSString`, `NSArray`, or `NSDictionary` objects. Instead, got: %@", connectionSpecifier];
     }
     
-    [self.mutableConnections addObject:connection];
+    if (connection != nil) {
+        [self.mutableConnections addObject:connection];
+    }
 }
 
 - (id)defaultValueForAttribute:(NSString *)attributeName

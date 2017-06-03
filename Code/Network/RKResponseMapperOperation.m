@@ -47,9 +47,13 @@ NSError *RKErrorFromMappingResult(RKMappingResult *mappingResult)
         description = @"Expected mapping result to contain at least one object to construct an error";
         RKLogWarning(@"%@", description);
     }
-    NSDictionary *userInfo = @{RKObjectMapperErrorObjectsKey: collection,
-                              NSLocalizedDescriptionKey: description};
-
+    
+    NSDictionary *userInfo = nil;
+    if (collection != nil) {
+        userInfo = @{RKObjectMapperErrorObjectsKey: collection,
+                                   NSLocalizedDescriptionKey: description};
+    }
+    
     NSError *error = [NSError errorWithDomain:RKErrorDomain code:RKMappingErrorFromMappingResult userInfo:userInfo];
     return error;
 }

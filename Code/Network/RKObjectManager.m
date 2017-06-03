@@ -128,7 +128,9 @@ extern NSString *RKStringDescribingRequestMethod(RKRequestMethod method);
     id value = (self.parameters)[rootKey];
     if (value) {
         if ([value isKindOfClass:[NSMutableArray class]]) {
-            [value addObject:nonNestedParameters];
+            if (nonNestedParameters != nil) {
+                [value addObject:nonNestedParameters];
+            }
         } else if ([value isKindOfClass:[NSDictionary class]]) {
             NSMutableArray *mutableArray = [NSMutableArray arrayWithObjects:value, nonNestedParameters, nil];
             (self.parameters)[rootKey] = mutableArray;
@@ -136,7 +138,9 @@ extern NSString *RKStringDescribingRequestMethod(RKRequestMethod method);
             [NSException raise:NSInvalidArgumentException format:@"Unexpected argument of type '%@': expected an NSDictionary or NSArray.", [value class]];
         }
     } else {
-        (self.parameters)[rootKey] = (inArray ? @[ nonNestedParameters ] : nonNestedParameters);
+        if (nonNestedParameters != nil) {
+            (self.parameters)[rootKey] = (inArray ? @[ nonNestedParameters ] : nonNestedParameters);
+        }
     }
 }
 
